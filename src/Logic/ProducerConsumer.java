@@ -4,7 +4,10 @@
  */
 package Logic;
 
+import Visual.ThreadsVisual;
 import java.util.LinkedList;
+import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -14,20 +17,38 @@ public class ProducerConsumer{
   
     LinkedList<Integer> Products = new LinkedList<>();
     int capacity = 10;
+    ThreadsVisual interfaz;
+    private JLabel label;
+    
+    public ProducerConsumer(ThreadsVisual interfaz, JLabel label) {
+        
+        this.interfaz = interfaz;
+        this.label = label;
+        
+    }
+    
+    public ProducerConsumer() {
+    }
     
     public void Producer() throws InterruptedException {
         
-        int product = 0;
+        final int product = 0;
+        int localValue = product;
         while(true) {
             
             synchronized(this) {
                 
                 while(Products.size() == capacity) wait();
                 
-                Products.add(product++);
+                Products.add(localValue++);
                 
-                System.out.println("Adding product - " + product);
+                System.out.println("Adding product - " + localValue);
                 
+                SwingUtilities.invokeLater(() -> {
+                    label.setText( "Produced: " + "1");
+                });
+                
+
                 notify();
                
                 Thread.sleep(1000);

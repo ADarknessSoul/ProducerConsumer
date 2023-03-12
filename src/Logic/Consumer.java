@@ -6,6 +6,7 @@ package Logic;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -27,6 +28,7 @@ public class Consumer implements Runnable{
         } catch (InterruptedException ex) {
             Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
         
     }
     
