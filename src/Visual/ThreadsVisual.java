@@ -58,13 +58,11 @@ public class ThreadsVisual extends javax.swing.JFrame {
         pnlTop = new javax.swing.JPanel();
         pnlVelocidad = new javax.swing.JPanel();
         lblVelocidad = new javax.swing.JLabel();
-        btnVelocidad = new javax.swing.JButton();
         txtVelocidad = new javax.swing.JTextField();
         pnlTitulo = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         btnIniciar = new javax.swing.JButton();
         pnlCapacidad = new javax.swing.JPanel();
-        btnCapacidad = new javax.swing.JButton();
         lblCapacidad = new javax.swing.JLabel();
         txtCapacidad = new javax.swing.JTextField();
         pnlBottom = new javax.swing.JPanel();
@@ -104,14 +102,6 @@ public class ThreadsVisual extends javax.swing.JFrame {
         lblVelocidad.setText("Cambiar velocidad en milisegundos:");
         pnlVelocidad.add(lblVelocidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 200, -1));
 
-        btnVelocidad.setText("Cambiar");
-        btnVelocidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVelocidadActionPerformed(evt);
-            }
-        });
-        pnlVelocidad.add(btnVelocidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, -1, -1));
-
         txtVelocidad.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtVelocidad.setText("1000");
         pnlVelocidad.add(txtVelocidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 190, -1));
@@ -134,14 +124,6 @@ public class ThreadsVisual extends javax.swing.JFrame {
         pnlTop.add(pnlTitulo);
 
         pnlCapacidad.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnCapacidad.setText("Cambiar");
-        btnCapacidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCapacidadActionPerformed(evt);
-            }
-        });
-        pnlCapacidad.add(btnCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, -1, -1));
 
         lblCapacidad.setText("Modificar capacidad:");
         pnlCapacidad.add(lblCapacidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, -1));
@@ -318,10 +300,6 @@ public class ThreadsVisual extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCapacidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapacidadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCapacidadActionPerformed
-
     private void txtCapacidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCapacidadActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCapacidadActionPerformed
@@ -346,8 +324,10 @@ public class ThreadsVisual extends javax.swing.JFrame {
         cajas[14] = this.imgBox15;
         cajas[15] = this.imgBox16;
         
+        int capacidad = Integer.parseInt(txtCapacidad.getText());
+        int velocidad = Integer.parseInt(txtVelocidad.getText());
         
-        pc = new ProducerConsumer(this, this.lblCantidadProducido, this.lblCantidadConsumido, this.lblCantidadStock, cajas);
+        pc = new ProducerConsumer(this, this.lblCantidadProducido, this.lblCantidadConsumido, this.lblCantidadStock, cajas, capacidad, velocidad, this.lblAcumulado, this.txtAcumulado);
         
         cs = new Consumer(pc);
         prod = new Producer(pc);
@@ -371,10 +351,6 @@ public class ThreadsVisual extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnIniciarActionPerformed
-
-    private void btnVelocidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVelocidadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVelocidadActionPerformed
 
     /**
      * @param args the command line arguments
@@ -412,9 +388,7 @@ public class ThreadsVisual extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCapacidad;
     private javax.swing.JButton btnIniciar;
-    private javax.swing.JButton btnVelocidad;
     private javax.swing.JLabel imgBox1;
     private javax.swing.JLabel imgBox10;
     private javax.swing.JLabel imgBox11;

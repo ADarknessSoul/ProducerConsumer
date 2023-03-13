@@ -8,6 +8,7 @@ import Visual.ThreadsVisual;
 import java.util.LinkedList;
 import java.util.Random;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 /**
@@ -23,14 +24,21 @@ public class ProducerConsumer{
     private JLabel labelC;
     private JLabel labelS;
     private JLabel[] boxes;
+    private int velocidad = 1000;
+    private JLabel labelAc;
+    private JTextField txtAc;
     
-    public ProducerConsumer(ThreadsVisual interfaz, JLabel label, JLabel labelC, JLabel labelS, JLabel[] boxes) {
+    public ProducerConsumer(ThreadsVisual interfaz, JLabel label, JLabel labelC, JLabel labelS, JLabel[] boxes, int capacidad, int velocidad, JLabel labelAc, JTextField txtAc) {
         
         this.interfaz = interfaz;
         this.label = label;
         this.labelC = labelC;
         this.labelS = labelS;
         this.boxes = boxes;
+        this.capacity = capacidad;
+        this.velocidad = velocidad;
+        this.labelAc = labelAc;
+        this.txtAc = txtAc;
     }
     
     public ProducerConsumer() {
@@ -40,7 +48,6 @@ public class ProducerConsumer{
         
         int localValue = 0;
         int aux = 0;
-        int random;
         System.out.println(boxes[0]);
         while(true) {
             
@@ -53,14 +60,31 @@ public class ProducerConsumer{
                 System.out.println("Adding product - " + localValue);
                 label.setText(Integer.toString(localValue));
                 aux = Integer.parseInt(labelS.getText()) + 1;
-                labelS.setText(Integer.toString(aux));
-                random = getRandom(0, 15);
-                boxes[random].isDisplayable();
-                
+                labelS.setText(Integer.toString(aux));     
+
+               for(int i = 0; i < capacity; i++) {
+                   
+                   if(!boxes[i].isVisible()) {
+                       
+                       boxes[i].setVisible(true);
+                       break;
+                       
+                   } else if(capacity >= 16 && i > 15) {
+                       
+                       labelAc.setVisible(true);
+                       txtAc.setVisible(true);
+                       aux = Integer.parseInt(txtAc.getText()) + 1;
+                       txtAc.setText(Integer.toString(aux));
+                       
+                   }
+                   
+                   
+                   
+               }
 
                 notify();
                
-                Thread.sleep(1000);
+                Thread.sleep(velocidad);
             }
             
         }
@@ -82,10 +106,25 @@ public class ProducerConsumer{
                 labelC.setText(Integer.toString(++localValue));
                 aux = Integer.parseInt(labelS.getText()) - 1;
                 labelS.setText(Integer.toString(aux));
+
+                for(int i = 0; i < capacity; i++) {
+                   
+                   if(boxes[i].isVisible()) {
+                       
+                       boxes[i].setVisible(false);
+                       break;
+                       
+                   } else if(capacity >= 16 && i > 15) {
+                       
+                       
+                       
+                   }
+                   
+               }
                 
                 notify();
                 
-                Thread.sleep(1000);
+                Thread.sleep(velocidad);
             }
             
             
