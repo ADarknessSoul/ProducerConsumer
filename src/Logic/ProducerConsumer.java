@@ -6,6 +6,7 @@ package Logic;
 
 import Visual.ThreadsVisual;
 import java.util.LinkedList;
+import java.util.Random;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
@@ -19,12 +20,17 @@ public class ProducerConsumer{
     int capacity = 10;
     ThreadsVisual interfaz;
     private JLabel label;
+    private JLabel labelC;
+    private JLabel labelS;
+    private JLabel[] boxes;
     
-    public ProducerConsumer(ThreadsVisual interfaz, JLabel label) {
+    public ProducerConsumer(ThreadsVisual interfaz, JLabel label, JLabel labelC, JLabel labelS, JLabel[] boxes) {
         
         this.interfaz = interfaz;
         this.label = label;
-        
+        this.labelC = labelC;
+        this.labelS = labelS;
+        this.boxes = boxes;
     }
     
     public ProducerConsumer() {
@@ -32,8 +38,10 @@ public class ProducerConsumer{
     
     public void Producer() throws InterruptedException {
         
-        final int product = 0;
-        int localValue = product;
+        int localValue = 0;
+        int aux = 0;
+        int random;
+        System.out.println(boxes[0]);
         while(true) {
             
             synchronized(this) {
@@ -43,10 +51,11 @@ public class ProducerConsumer{
                 Products.add(localValue++);
                 
                 System.out.println("Adding product - " + localValue);
-                
-                SwingUtilities.invokeLater(() -> {
-                    label.setText( "Produced: " + "1");
-                });
+                label.setText(Integer.toString(localValue));
+                aux = Integer.parseInt(labelS.getText()) + 1;
+                labelS.setText(Integer.toString(aux));
+                random = getRandom(0, 15);
+                boxes[random].isDisplayable();
                 
 
                 notify();
@@ -60,6 +69,8 @@ public class ProducerConsumer{
     
     public void Consumer() throws InterruptedException {
         
+        int localValue = 0;
+        int aux = 0;
         while(true){
             
             synchronized(this) {
@@ -68,6 +79,9 @@ public class ProducerConsumer{
                 
                 int val = Products.removeFirst();
                 System.out.println("Consuming product - " + val);
+                labelC.setText(Integer.toString(++localValue));
+                aux = Integer.parseInt(labelS.getText()) - 1;
+                labelS.setText(Integer.toString(aux));
                 
                 notify();
                 
@@ -76,6 +90,13 @@ public class ProducerConsumer{
             
             
         }
+        
+    }
+    
+    public int getRandom(int min, int max) {
+        
+        Random random = new Random();
+        return random.nextInt(max - min) + min;
         
     }
     

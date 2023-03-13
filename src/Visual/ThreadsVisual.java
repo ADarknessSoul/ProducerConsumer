@@ -9,6 +9,7 @@ import Logic.Producer;
 import javax.swing.DefaultListModel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 /**
  *
  * @author gerar
@@ -93,12 +94,10 @@ public class ThreadsVisual extends javax.swing.JFrame {
         lblCantidadConsumido = new javax.swing.JLabel();
         lblStock = new javax.swing.JLabel();
         lblCantidadStock = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        ListProductor1 = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pnlTop.setLayout(new java.awt.GridLayout());
+        pnlTop.setLayout(new java.awt.GridLayout(1, 0));
 
         pnlVelocidad.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -160,7 +159,7 @@ public class ThreadsVisual extends javax.swing.JFrame {
 
         getContentPane().add(pnlTop, java.awt.BorderLayout.PAGE_START);
 
-        pnlBottom.setLayout(new java.awt.GridLayout());
+        pnlBottom.setLayout(new java.awt.GridLayout(1, 0));
 
         pnlDiseño.setLayout(new java.awt.GridBagLayout());
 
@@ -293,7 +292,7 @@ public class ThreadsVisual extends javax.swing.JFrame {
         pnlCantidades.add(lblProducido, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 60, -1));
 
         lblCantidadProducido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblCantidadProducido.setText("xdddd");
+        lblCantidadProducido.setText("0");
         lblCantidadProducido.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         pnlCantidades.add(lblCantidadProducido, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 60, -1));
 
@@ -312,10 +311,6 @@ public class ThreadsVisual extends javax.swing.JFrame {
         lblCantidadStock.setText("0");
         pnlCantidades.add(lblCantidadStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 60, -1));
 
-        jScrollPane2.setViewportView(ListProductor1);
-
-        pnlCantidades.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 70, -1));
-
         pnlBottom.add(pnlCantidades);
 
         getContentPane().add(pnlBottom, java.awt.BorderLayout.CENTER);
@@ -332,14 +327,27 @@ public class ThreadsVisual extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCapacidadActionPerformed
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
+           
+        JLabel[] cajas = new JLabel[16];
+        cajas[0] = this.imgBox1;
+        cajas[1] = this.imgBox2;
+        cajas[2] = this.imgBox3;
+        cajas[3] = this.imgBox4;
+        cajas[4] = this.imgBox5;
+        cajas[5] = this.imgBox6;
+        cajas[6] = this.imgBox7;
+        cajas[7] = this.imgBox8;
+        cajas[8] = this.imgBox9;
+        cajas[9] = this.imgBox10;
+        cajas[10] = this.imgBox11;
+        cajas[11] = this.imgBox12;
+        cajas[12] = this.imgBox13;
+        cajas[13] = this.imgBox14;
+        cajas[14] = this.imgBox15;
+        cajas[15] = this.imgBox16;
         
-        ProduceConsumerModel = new DefaultListModel();
-        this.ListProductor1.setModel(ProduceConsumerModel);
         
-        ProduceConsumerModel.removeAllElements();
-        ProduceConsumerModel.addElement("Conche tu madre");
-        
-        pc = new ProducerConsumer(this, this.lblCantidadProducido);
+        pc = new ProducerConsumer(this, this.lblCantidadProducido, this.lblCantidadConsumido, this.lblCantidadStock, cajas);
         
         cs = new Consumer(pc);
         prod = new Producer(pc);
@@ -349,17 +357,17 @@ public class ThreadsVisual extends javax.swing.JFrame {
         
         thread1.start();
         thread2.start();
-
-        try {
-            thread1.join();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ThreadsVisual.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            thread2.join();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ThreadsVisual.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                
+//        try {
+//            thread1.join();
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(ThreadsVisual.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        try {
+//            thread2.join();
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(ThreadsVisual.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         
         
     }//GEN-LAST:event_btnIniciarActionPerformed
@@ -404,7 +412,6 @@ public class ThreadsVisual extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> ListProductor1;
     private javax.swing.JButton btnCapacidad;
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnVelocidad;
@@ -424,7 +431,6 @@ public class ThreadsVisual extends javax.swing.JFrame {
     private javax.swing.JLabel imgBox7;
     private javax.swing.JLabel imgBox8;
     private javax.swing.JLabel imgBox9;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAcumulado;
     private javax.swing.JLabel lblCantidadConsumido;
     private javax.swing.JLabel lblCantidadProducido;
