@@ -257,6 +257,7 @@ public class ThreadsVisual extends javax.swing.JFrame {
         pnlDiseño.add(lblAcumulado, gridBagConstraints);
 
         txtAcumulado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtAcumulado.setText("0");
         txtAcumulado.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtAcumulado.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -337,6 +338,7 @@ public class ThreadsVisual extends javax.swing.JFrame {
         
         thread1.start();
         thread2.start();
+        
                 
 //        try {
 //            thread1.join();

@@ -27,6 +27,7 @@ public class ProducerConsumer{
     private int velocidad = 1000;
     private JLabel labelAc;
     private JTextField txtAc;
+    private int overflow = 0;
     
     public ProducerConsumer(ThreadsVisual interfaz, JLabel label, JLabel labelC, JLabel labelS, JLabel[] boxes, int capacidad, int velocidad, JLabel labelAc, JTextField txtAc) {
         
@@ -62,25 +63,31 @@ public class ProducerConsumer{
                 aux = Integer.parseInt(labelS.getText()) + 1;
                 labelS.setText(Integer.toString(aux));     
 
-               for(int i = 0; i < capacity; i++) {
+                   for(int i = 0; i < capacity; i++) {
                    
-                   if(!boxes[i].isVisible()) {
-                       
-                       boxes[i].setVisible(true);
-                       break;
-                       
-                   } else if(capacity >= 16 && i > 15) {
-                       
-                       labelAc.setVisible(true);
-                       txtAc.setVisible(true);
-                       aux = Integer.parseInt(txtAc.getText()) + 1;
-                       txtAc.setText(Integer.toString(aux));
-                       
-                   }
-                   
-                   
-                   
-               }
+                       if(i <= 15){
+                          
+                            if(!boxes[i].isVisible()) {
+                                
+                                boxes[i].setVisible(true);
+                                break;
+
+                            } 
+                           
+                       } else if(i > 15){
+                           
+                           if(!labelAc.isVisible()) labelAc.setVisible(true);
+                           if(!txtAc.isVisible()) txtAc.setVisible(true);
+                                                      
+                           txtAc.setText(Integer.toString(++overflow));
+                           break;
+                           
+                       }
+
+              
+                    }
+
+
 
                 notify();
                
@@ -109,16 +116,38 @@ public class ProducerConsumer{
 
                 for(int i = 0; i < capacity; i++) {
                    
-                   if(boxes[i].isVisible()) {
-                       
-                       boxes[i].setVisible(false);
-                       break;
-                       
-                   } else if(capacity >= 16 && i > 15) {
-                       
-                       
-                       
-                   }
+                    if(i <= 15 && overflow == 0) {
+                        
+                        if(boxes[i].isVisible()) {
+
+                            boxes[i].setVisible(false);
+
+                            if(overflow != 0) txtAc.setText(Integer.toString(--overflow));
+                            if(overflow == 0){
+
+                                if(labelAc.isVisible()) labelAc.setVisible(false);
+                                if(txtAc.isVisible()) txtAc.setVisible(false);
+
+                            }
+
+                            break;
+                         }   
+                          
+                        
+                    } else if(i > 15){
+                        
+                        if(overflow != 0) txtAc.setText(Integer.toString(--overflow));
+                        if(overflow == 0){
+
+                            if(labelAc.isVisible()) labelAc.setVisible(false);
+                            if(txtAc.isVisible()) txtAc.setVisible(false);
+
+                        }
+                        break;
+                        
+                    }
+                    
+                   
                    
                }
                 
@@ -132,7 +161,7 @@ public class ProducerConsumer{
         
     }
     
-    public int getRandom(int min, int max) {
+     public int getRandom(int min, int max) {
         
         Random random = new Random();
         return random.nextInt(max - min) + min;
